@@ -1,0 +1,143 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jason Pitchford - Full-Stack Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    <canvas id="circuit-canvas"></canvas>
+    
+    <main>
+        <header>
+            <nav>
+                <div class="nav-content">
+                    <a href="#home" class="logo">JP</a>
+                    <div class="menu-toggle">&#9776;</div>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="social-icons">
+                    <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://discord.gg/yourinvitelink" target="_blank" rel="noopener noreferrer"><i class="fab fa-discord"></i></a>
+                </div>
+            </nav>
+        </header>
+
+        <section id="home">
+            <div class="container">
+                <div class="section-content">
+                    <p class="greeting">Hey, I'm</p>
+                    <pre class="name-highlight">Jason Pitchford </pre>
+                    <h2>I create <span id="typewriter" class="highlight"></span> software solutions.</h2>
+                    <p>I'm a high school student passionate about computer science and machine learning. Skilled in Python, Java, and SQL, I'm looking for opportunities to solve real-world problems and gain experience. Currently, I'm focused on building innovative applications and expanding my knowledge in the field of technology.</p>
+                    <div class="button-group">
+                        <a href="#contact" class="btn">Get In Touch</a>
+                        <a href="path/to/your/resume.pdf" class="btn btn-secondary" download>Download PDF Resume</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="container">
+                <h2>About Me</h2>
+                <div class="section-content about-content">
+                    <div class="about-text">
+                        <p>Hello! I'm Jason, a student passionate about computer science. My interest in programming started back in 2022 when I began freelancing as a programmer — turns out building bots and systems for clients taught me a lot about real-world applications of computer science!</p>
+                        <p>Fast-forward to today and I've had the privilege of working on various projects, from cryptocurrency bots to lyric video generators. My main focus these days is expanding my knowledge and skills in computer science while working on challenging projects.</p>
+                    </div>
+                    <div class="skills">
+                        <h3>Some technologies I've worked with recently:</h3>
+                        <ul class="skills-list">
+                            <li>Python</li>
+                            <li>Java</li>
+                            <li>JavaScript</li>
+                            <li>SQL/Databases</li>
+                            <li>LLMs (Large Language Models)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience">
+            <div class="container">
+                <h2>Where I've Worked</h2>
+                <div class="section-content">
+                    <div class="experience-item">
+                        <h3>Freelance Programmer <span class="company">@ Self-Employed</span></h3>
+                        <p class="duration">2022 - Present</p>
+                        <ul>
+                            <li>Manage my own time to assure requests are met before the deadline</li>
+                            <li>Build programs for clients that are of the desired quality</li>
+                            <li>Built a bot that helped people more safely purchase cryptocurrency</li>
+                            <li>Built a system to create lyric videos from audio recordings</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="container">
+                <h2>Some Things I've Built</h2>
+                <div class="grid">
+                    <div class="project-card" onclick="window.open('https://openimg.com', '_blank')">
+                        <img src="OpenImg.png" alt="Open Image">
+                        <div class="project-card-content">
+                            <h3>Open Image</h3>
+                            <p>Open Image is a crowd sourced data collection tool. It allows researchers to list their surveys on the app and request people to contribute their own image and text data to the causes.</p>
+                            <p class="technologies">JavaScript, SQL, PostgreSQL DBMS, </p>
+                        </div>
+                    </div>
+                    <div class="project-card" onclick="window.open('https://vr-experience-project.com', '_blank')">
+                        <img src="/api/placeholder/400/320" alt="VR Experience Project">
+                        <div class="project-card-content">
+                            <h3>VR Experience</h3>
+                            <p>An immersive virtual reality experience for educational purposes.</p>
+                            <p class="technologies">Unity, C#, Oculus SDK</p>
+                        </div>
+                    </div>
+                    <div class="project-card" onclick="window.open('https://t.me/tokeneval', '_blank')">
+                        <img src="TokenEval.jpeg" alt="Blockchain App Project">
+                        <div class="project-card-content">
+                            <h3>Token Eval</h3>
+                            <p>An application using blockchain technology to help determine unsafe ETH tokens when they are launched on the chain.</p>
+                            <p class="technologies">Python, Web3.py, Telegram API, Flask</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+                <h2 class="text-center">Get In Touch</h2>
+                <div class="section-content text-center">
+                    <p>I'm currently looking for new opportunities to apply my programming skills and gain experience. Whether you have a question or just want to say hi, I'll try my best to get back to you!</p>
+                    <a href="mailto:JasonPitchford@gmail.com" class="btn">Say Hello</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="">
+            <p class="copyright">&copy; <span id="current-year"></span> Jason Pitchford. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>
