@@ -1,4 +1,4 @@
-# Jason Pitchford's Portfolio Website
+# Portfolio Website
 
 This is the source code for my personal portfolio website. It showcases my skills, projects, and experience as a high school student passionate about computer science and machine learning.
 
