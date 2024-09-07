@@ -487,12 +487,21 @@ gsap.to({}, {
         end: "bottom bottom",
         onUpdate: (self) => {
             const progress = self.progress;
+            const algorithmInfo = document.getElementById('current-algorithm');
+            const algorithmLink = document.getElementById('algorithm-info').querySelector('a');
+            
             if (progress < 0.33) {
                 currentSystem = 'particles';
+                algorithmInfo.textContent = 'Network Connection';
+                algorithmLink.href = 'https://en.wikipedia.org/wiki/Network_theory';
             } else if (progress < 0.66) {
                 currentSystem = 'boids';
+                algorithmInfo.textContent = 'Boids';
+                algorithmLink.href = 'https://en.wikipedia.org/wiki/Boids';
             } else {
                 currentSystem = 'elastic';
+                algorithmInfo.textContent = 'Physics Engine';
+                algorithmLink.href = 'https://en.wikipedia.org/wiki/Physics_engine';
             }
 
             if (currentSystem === 'elastic') {
