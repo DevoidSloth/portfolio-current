@@ -354,96 +354,109 @@ function initElasticPoints() {
     }
 }
 
-function animate() {
-    ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+let lastTime = 0;
+const targetFPS = 60;
+const frameInterval = 1000 / targetFPS;
 
-    if (currentSystem === 'particles') {
-        for (let i = 0; i < particles.length; i++) {
-            particles[i].update();
-            particles[i].draw();
-            
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
+function animate(currentTime) {
+    requestAnimationFrame(animate);
+
+    // Calculate time elapsed since last frame
+    const deltaTime = currentTime - lastTime;
+
+    // Only update if enough time has passed
+    if (deltaTime > frameInterval) {
+        // Adjust last time, accounting for any extra time beyond the frame interval
+        lastTime = currentTime - (deltaTime % frameInterval);
+
+        ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+
+        if (currentSystem === 'particles') {
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
                 
-                if (distance < 100) {
-                    ctx.strokeStyle = `hsla(${hue}, 100%, 50%, ${1 - distance / 100})`;
-                    ctx.lineWidth = 1;
-                    ctx.beginPath();
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.stroke();
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 100) {
+                        ctx.strokeStyle = `hsla(${hue}, 100%, 50%, ${1 - distance / 100})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+
+                if (particles[i].size <= 0.2 * dpr) {
+                    particles[i] = new Particle();
                 }
             }
-
-            if (particles[i].size <= 0.2 * dpr) {
-                particles[i] = new Particle();
+        } else if (currentSystem === 'boids') {
+            for (let boid of boids) {
+                boid.flock(boids);
+                boid.update();
+                boid.draw();
             }
-        }
-    } else if (currentSystem === 'boids') {
-        for (let boid of boids) {
-            boid.flock(boids);
-            boid.update();
-            boid.draw();
-        }
-        
-        for (let i = 0; i < boids.length; i++) {
-            for (let j = i + 1; j < boids.length; j++) {
-                let d = boids[i].position.dist(boids[j].position);
-                if (d < 30) {
-                    ctx.strokeStyle = `hsla(${hue}, 100%, 70%, ${1 - d / 30})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.beginPath();
-                    ctx.moveTo(boids[i].position.x, boids[i].position.y);
-                    ctx.lineTo(boids[j].position.x, boids[j].position.y);
-                    ctx.stroke();
+            
+            for (let i = 0; i < boids.length; i++) {
+                for (let j = i + 1; j < boids.length; j++) {
+                    let d = boids[i].position.dist(boids[j].position);
+                    if (d < 30) {
+                        ctx.strokeStyle = `hsla(${hue}, 100%, 70%, ${1 - d / 30})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(boids[i].position.x, boids[i].position.y);
+                        ctx.lineTo(boids[j].position.x, boids[j].position.y);
+                        ctx.stroke();
+                    }
                 }
             }
-        }
-    } else if (currentSystem === 'elastic') {
-        for (let i = 0; i < elasticPoints.length; i++) {
-            elasticPoints[i].update();
-            elasticPoints[i].draw();
-            
-            for (let j = i + 1; j < elasticPoints.length; j++) {
-                let dx = elasticPoints[j].x - elasticPoints[i].x;
-                let dy = elasticPoints[j].y - elasticPoints[i].y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
+        } else if (currentSystem === 'elastic') {
+            for (let i = 0; i < elasticPoints.length; i++) {
+                elasticPoints[i].update();
+                elasticPoints[i].draw();
                 
-                if (distance < elasticPoints[i].baseRadius + elasticPoints[j].baseRadius) {
-                    let angle = Math.atan2(dy, dx);
-                    let sin = Math.sin(angle);
-                    let cos = Math.cos(angle);
+                for (let j = i + 1; j < elasticPoints.length; j++) {
+                    let dx = elasticPoints[j].x - elasticPoints[i].x;
+                    let dy = elasticPoints[j].y - elasticPoints[i].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < elasticPoints[i].baseRadius + elasticPoints[j].baseRadius) {
+                        let angle = Math.atan2(dy, dx);
+                        let sin = Math.sin(angle);
+                        let cos = Math.cos(angle);
 
-                    let vx1 = elasticPoints[i].vx * cos + elasticPoints[i].vy * sin;
-                    let vy1 = elasticPoints[i].vy * cos - elasticPoints[i].vx * sin;
-                    let vx2 = elasticPoints[j].vx * cos + elasticPoints[j].vy * sin;
-                    let vy2 = elasticPoints[j].vy * cos - elasticPoints[j].vx * sin;
+                        let vx1 = elasticPoints[i].vx * cos + elasticPoints[i].vy * sin;
+                        let vy1 = elasticPoints[i].vy * cos - elasticPoints[i].vx * sin;
+                        let vx2 = elasticPoints[j].vx * cos + elasticPoints[j].vy * sin;
+                        let vy2 = elasticPoints[j].vy * cos - elasticPoints[j].vx * sin;
 
-                    let temp = vx1;
-                    vx1 = vx2;
-                    vx2 = temp;
+                        let temp = vx1;
+                        vx1 = vx2;
+                        vx2 = temp;
 
-                    elasticPoints[i].vx = vx1 * cos - vy1 * sin;
-                    elasticPoints[i].vy = vy1 * cos + vx1 * sin;
-                    elasticPoints[j].vx = vx2 * cos - vy2 * sin;
-                    elasticPoints[j].vy = vy2 * cos + vx2 * sin;
+                        elasticPoints[i].vx = vx1 * cos - vy1 * sin;
+                        elasticPoints[i].vy = vy1 * cos + vx1 * sin;
+                        elasticPoints[j].vx = vx2 * cos - vy2 * sin;
+                        elasticPoints[j].vy = vy2 * cos + vx2 * sin;
 
-                    let overlap = elasticPoints[i].baseRadius + elasticPoints[j].baseRadius - distance;
-                    elasticPoints[i].x -= overlap/2 * cos;
-                    elasticPoints[i].y -= overlap/2 * sin;
-                    elasticPoints[j].x += overlap/2 * cos;
-                    elasticPoints[j].y += overlap/2 * sin;
+                        let overlap = elasticPoints[i].baseRadius + elasticPoints[j].baseRadius - distance;
+                        elasticPoints[i].x -= overlap/2 * cos;
+                        elasticPoints[i].y -= overlap/2 * sin;
+                        elasticPoints[j].x += overlap/2 * cos;
+                        elasticPoints[j].y += overlap/2 * sin;
 
-                    elasticPoints[i].squishFactor = 1.5;
-                    elasticPoints[j].squishFactor = 1.5;
+                        elasticPoints[i].squishFactor = 1.5;
+                        elasticPoints[j].squishFactor = 1.5;
+                    }
                 }
             }
         }
     }
-
-    requestAnimationFrame(animate);
 }
 
 function debounce(func, wait) {
@@ -467,7 +480,7 @@ calculateParticleCount();
 initParticles();
 initBoids();
 initElasticPoints();
-animate();
+animate(0);
 
 gsap.to({}, {
     scrollTrigger: {
