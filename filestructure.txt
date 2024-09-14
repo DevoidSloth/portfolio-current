@@ -1,0 +1,13 @@
+|-- .gitignore
+|-- .vercel
+    |-- project.json
+|-- ComingSoon.png
+|-- LICENCE
+|-- OpenImg.png
+|-- README.md
+|-- TokenEval.png
+|-- favicon.ico
+|-- index.html
+|-- index.js
+|-- resume.txt
+|-- styles.css
